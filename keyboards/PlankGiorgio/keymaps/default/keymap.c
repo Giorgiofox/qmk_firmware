@@ -53,11 +53,11 @@ enum unicode_names {
 };
 
 const uint32_t PROGMEM unicode_map[] = {
-    [A]  = 0x00E0,  // ‽
-    [E] = 0x00E8,  // ⸮
-    [I]  = 0x00EC, // 🐍
-    [O]  = 0x00F2, // 🐍
-    [U]  = 0x1F40D, // 🐍
+    [A]  = 0x00E0,  // 
+    [E] = 0x00E8,  // 
+    [I]  = 0x00EC, // 
+    [O]  = 0x00F2, // 
+    [U]  = 0x1F40D, // 
 };
 
 
@@ -66,8 +66,8 @@ const uint32_t PROGMEM unicode_map[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT_planck_grid( // default layer
-        KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, 
-        LT(3, KC_TAB), KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, 
+        LT(3, KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, 
+        KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, 
         KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, MT(MOD_LSFT, KC_ENT), 
         MO(4), KC_LCTL, KC_LGUI, KC_LALT, MO(1), KC_SPC, MO(2), RALT_T(KC_LEFT), KC_DOWN, KC_UP, KC_RGHT),
 
