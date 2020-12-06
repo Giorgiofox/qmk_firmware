@@ -4,7 +4,7 @@
 
 *A short description of the keyboard/project*
 
-* Keyboard Maintainer: [GiorgioCampiotti](https://github.com/yourusername)
+* Keyboard Maintainer: [GiorgioCampiotti](https://github.com/giorgiofox)
 * Hardware Supported: *The PCBs, controllers supported*
 * Hardware Availability: *Links to where you can find this hardware*
 
