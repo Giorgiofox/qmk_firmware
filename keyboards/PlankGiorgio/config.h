@@ -91,6 +91,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NO_MUSIC_MODE
 
 
+
+#define MOUSEKEY_DELAY 50
+
+#define MOUSEKEY_INTERVAL 30
+
+
+
+
 #pragma once
 
 #define AUTO_SHIFT_TIMEOUT 180
