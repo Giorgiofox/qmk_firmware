@@ -34,6 +34,7 @@ enum planck_keycodes {
   LOWER,
   RAISE,
   FUNCTION,
+  ADJUST,
   XSS,
   XSS1
 };
@@ -41,9 +42,32 @@ enum planck_keycodes {
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 
+// L = .-.. 
+// R = .-. 
+// F = ..-. 
+
+#define LO E__NOTE(_C5), Q__NOTE(_C5),E__NOTE(_C5),E__NOTE(_C5)//, B__NOTE(_C3), W__NOTE(_C3), Q__NOTE(_C3)
+#define RA E__NOTE(_C5), Q__NOTE(_C5),E__NOTE(_C5)//, B__NOTE(_C3), W__NOTE(_C3), Q__NOTE(_C3)
+#define FUN E__NOTE(_C5),E__NOTE(_C5), Q__NOTE(_C5),E__NOTE(_C5)//, B__NOTE(_C3), W__NOTE(_C3), Q__NOTE(_C3)
+
+
+#ifdef AUDIO_ENABLE
+  float plover_song[][2]     = SONG(PLOVER_SOUND);
+  float plover_gb_song[][2]  = SONG(PLOVER_GOODBYE_SOUND);
+  float s1[][2]              = SONG(LO);
+  float s2[][2]              = SONG(RA);
+  float s3[][2]              = SONG(FUN);
+  float s4[][2]              = SONG(LO);
+  float s5[][2]              = SONG(IMPERIAL_MARCH);
+  float s6[][2]              = SONG(E1M1_DOOM);
+  float s7[][2]              = SONG(COIN_SOUND);
+  float s8[][2]              = SONG(ONE_UP_SOUND);
+  float s9[][2]              = SONG(SONIC_RING);
+#endif
 
 
 
+/*
 enum unicode_names {
     A,
     E,
@@ -60,7 +84,7 @@ const uint32_t PROGMEM unicode_map[] = {
     [U]  = 0x1F40D, // 
 };
 
-
+*/
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -87,14 +111,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
         KC_TRNS, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, KC_TRNS, KC_TRNS, KC_TRNS, KC_7, KC_8, KC_9, KC_MS_WH_UP, KC_TRNS, 
         KC_TRNS, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, KC_TRNS, KC_TRNS, KC_TRNS, KC_4, KC_5, KC_6, KC_MS_WH_UP, KC_TRNS, 
-        KC_TRNS, KC_ACL0, KC_ACL1, KC_ACL2, KC_TRNS, KC_TRNS, KC_TRNS, KC_1, KC_2, KC_3, KC_MS_WH_DOWN, KC_TRNS, 
+        KC_CAPSLOCK, KC_ACL0, KC_ACL1, KC_ACL2, KC_TRNS, KC_TRNS, KC_TRNS, KC_1, KC_2, KC_3, KC_MS_WH_DOWN, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MEDIA_PLAY_PAUSE, KC_TRNS, KC_0, KC_DOT, KC_COMM, KC_TRNS),
 
 [_FUNCTION] = LAYOUT_planck_grid( //Function Key
 
         TO(0), RGB_TOG, RGB_MOD, RGB_HUI, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_SLEP, 
         TG(3), AU_TOG, MU_TOG, MU_MOD, CK_TOGG, KC_TRNS, KC_TRNS, KC_TRNS, RGB_MODE_KNIGHT, KC_TRNS, KC_PGUP, KC_WAKE, 
-        KC_CAPSLOCK, XSS1, XSS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGDOWN, RESET, 
+        KC_TRNS, XSS1, XSS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGDOWN, RESET, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TG(1), KC_MEDIA_PLAY_PAUSE, TG(2), KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT)
 
 };
@@ -120,10 +144,12 @@ const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS(
 const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {3, 6, HSV_PURPLE}
 );
+// Light LEDs 11 & 12 in purple when keyboard layer 2 is active
 
 const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {3, 6, HSV_GREEN}
 );
+// Light LEDs 11 & 12 in purple when keyboard layer 2 is active
 
 const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {3, 6, HSV_BLUE}
@@ -156,7 +182,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(3, layer_state_cmp(state, 3));
     rgblight_set_layer_state(4, layer_state_cmp(state, 4));
 
-
+ //return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
     return state;
 }
 
@@ -195,7 +221,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
     case LOWER:
+
       if (record->event.pressed) {
+        #ifdef AUDIO_ENABLE
+        //    PLAY_SONG(s1);
+        #endif //AUDIO_ENABLE
         layer_on(_LOWER);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
@@ -206,6 +236,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case RAISE:
       if (record->event.pressed) {
+                #ifdef AUDIO_ENABLE
+         //   PLAY_SONG(s2);
+        #endif //AUDIO_ENABLE
         layer_on(_RAISE);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
@@ -215,26 +248,49 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
     case FUNCTION:
+              SEND_STRING("UTILITY DEBUG");
+
       if (record->event.pressed) {
+
+        #ifdef AUDIO_ENABLE
+            PLAY_SONG(s2);
+        #endif //AUDIO_ENABLE
         layer_on(_FUNCTION);
       } else {
         layer_off(_FUNCTION);
       }
       return false;
-      break;          
+      break;   
+          case ADJUST:
+      if (record->event.pressed) {
+                #ifdef AUDIO_ENABLE
+            PLAY_SONG(s2);
+        #endif //AUDIO_ENABLE
+        layer_on(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+      return false;
+      break;       
   }
   return true;
 }
 
 
-
+/*
 
 bool music_mask_user(uint16_t keycode) {
   switch (keycode) {
     case RAISE:
+
     case LOWER:
       return false;
     default:
       return true;
   }
 }
+
+*/
+
