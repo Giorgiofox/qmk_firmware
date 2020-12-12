@@ -22,7 +22,7 @@ RGBLIGHT_ENABLE = yes        # Enable keyboard RGB underglow
 BLUETOOTH_ENABLE = no       # Enable Bluetooth
 AUDIO_ENABLE = yes          # Audio output
 #define NO_MUSIC_MODE
-#UNICODE_ENABLE = yes
+UNICODE_ENABLE = yes
 #UNICODEMAP_ENABLE = yes
 #TAP_DANCE_ENABLE = yes
 EXTRAFLAGS += -flto # reduce firmare size

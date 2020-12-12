@@ -91,7 +91,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NO_MUSIC_MODE
 
 
-
+//#define UNICODE_SELECTED_MODES UC_LNX
+#define UNICODE_SELECTED_MODES UC_LNX,UC_WINC
 #define MOUSEKEY_DELAY 50
 
 #define MOUSEKEY_INTERVAL 30
