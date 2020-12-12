@@ -35,6 +35,7 @@ enum planck_keycodes {
   RAISE,
   FUNCTION,
   ADJUST,
+  MEH,
   XSS,
   XSS1
 };
@@ -116,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_FUNCTION] = LAYOUT_planck_grid( //Function Key
 
-        TO(0), RGB_TOG, RGB_MOD, RGB_HUI, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_SLEP, 
+        TO(0), RGB_TOG, RGB_MOD, RGB_HUI, KC_TRNS, RGB_MODE_PLAIN, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_SLEP, 
         TG(3), AU_TOG, MU_TOG, MU_MOD, CK_TOGG, KC_TRNS, KC_TRNS, KC_TRNS, RGB_MODE_KNIGHT, KC_TRNS, KC_PGUP, KC_WAKE, 
         KC_TRNS, XSS1, XSS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGDOWN, RESET, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TG(1), KC_MEDIA_PLAY_PAUSE, TG(2), KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT),
@@ -125,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
         KC_TRNS, UC_MOD, UC_WINC, UC(0x000E8), KC_TRNS, KC_TRNS, KC_TRNS, UC(0x000F9), UC(0x000EC), UC(0x000F2), KC_TRNS, KC_TRNS, 
         KC_TRNS, UC(0x000E0), UC(0x020AC), UC(0x000B0), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, UC_LNX, KC_TRNS, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, UC(0x30C4), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
+        KC_TRNS, KC_TRNS, KC_TRNS, UC(0x30C4), KC_TRNS, KC_TRNS, KC_TRNS, MEH, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TG(1), KC_TRNS, TG(2), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
 
 };
@@ -144,6 +145,7 @@ ograve 0x000F2
 ugrave 0x000F9
 degree 0x000B0
 katana 0x30C4
+meh ¯\_(ツ)_/¯
 */
 
 //KC_ASTG autoshit toggle
@@ -176,6 +178,10 @@ const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS(
 const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {3, 6, HSV_BLUE}
 );
+
+const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {3, 6, HSV_YELLOW}
+);
 // etc
 
 
@@ -187,7 +193,8 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
     my_layer1_layer,    // Overrides caps lock layer
     my_layer2_layer,    // Overrides other layers
     my_layer3_layer,    // Overrides other layers
-    my_layer4_layer     // Overrides other layers
+    my_layer4_layer,     // Overrides other layers
+    my_layer5_layer     // Overrides other layers
 
 );
 
@@ -203,6 +210,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(2, layer_state_cmp(state, 2));
     rgblight_set_layer_state(3, layer_state_cmp(state, 3));
     rgblight_set_layer_state(4, layer_state_cmp(state, 4));
+    rgblight_set_layer_state(5, layer_state_cmp(state, 5));
+
 
  //return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
     return state;
@@ -218,6 +227,15 @@ bool led_update_user(led_t led_state) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+        case MEH:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+           // SEND_STRING("¯\_(ツ)_/¯");
+                    send_unicode_hex_string("00AF 005C 005F 0028 30C4 0029 005F 002F 00AF");
+                            } else {
+            // when keycode QMKBEST is released
+        }
+        break;
     case XSS1:
         if (record->event.pressed) {
             // when keycode QMKBEST is pressed

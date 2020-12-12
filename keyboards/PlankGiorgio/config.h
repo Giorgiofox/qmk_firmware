@@ -68,14 +68,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define BACKLIGHT_LEVELS 3
 //#define BACKLIGHT_BREATHING
 
+    #ifndef NO_DEBUG
+    #define NO_DEBUG
+    #endif // !NO_DEBUG
+    #if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
+    #define NO_PRINT
+    #endif // !NO_PRINT
+
+
 #define RGB_DI_PIN D2
 #ifdef RGB_DI_PIN
-#define RGBLIGHT_ANIMATIONS
+//#define RGBLIGHT_ANIMATIONS
+#define RGBLIGHT_EFFECT_STATIC_GRADIENT
+#define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+#define RGBLIGHT_EFFECT_KNIGHT
+
 #define RGBLED_NUM 12
 #define RGBLIGHT_HUE_STEP 8
 #define RGBLIGHT_SAT_STEP 8
 #define RGBLIGHT_VAL_STEP 8
 #endif
+
+
+//#define BACKLIGHT_BREATHING
+
 
 #define RGBLIGHT_LAYERS
 
@@ -98,7 +114,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOUSEKEY_INTERVAL 30
 
 
-
+#define TAPPING_TERM 200
 
 #pragma once
 
