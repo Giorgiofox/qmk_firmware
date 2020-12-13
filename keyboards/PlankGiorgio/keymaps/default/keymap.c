@@ -36,6 +36,7 @@ enum planck_keycodes {
   FUNCTION,
   ADJUST,
   MEH,
+  EICAR,
   XSS,
   XSS1
 };
@@ -104,11 +105,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_RAISE] = LAYOUT_planck_grid( //reaise level 
         KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_TRNS, 
-        KC_DEL, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_TRNS, KC_TRNS, KC_UNDERSCORE, KC_EQL, KC_GRAVE, 
+        KC_DEL, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_TRNS, KC_UNDERSCORE, KC_EQL, KC_AT, KC_GRAVE, 
         KC_TRNS, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_TRNS, KC_MINUS, KC_PLUS, KC_BSLS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY),
 
-[_ADJUST] = LAYOUT_planck_grid( //mouse and other functions level, also activanle with rasie+lower
+[_ADJUST] = LAYOUT_planck_grid( //mouse and other functions level, also activable with rasie+lower
 
         KC_TRNS, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, KC_TRNS, KC_TRNS, KC_TRNS, KC_7, KC_8, KC_9, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, KC_TRNS, KC_TRNS, KC_TRNS, KC_4, KC_5, KC_6, KC_MS_WH_UP, KC_TRNS, 
@@ -119,14 +120,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
         TO(0), RGB_TOG, RGB_MOD, RGB_HUI, KC_TRNS, RGB_MODE_PLAIN, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_SLEP, 
         TG(3), AU_TOG, MU_TOG, MU_MOD, CK_TOGG, KC_TRNS, KC_TRNS, KC_TRNS, RGB_MODE_KNIGHT, KC_TRNS, KC_PGUP, KC_WAKE, 
-        KC_TRNS, XSS1, XSS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGDOWN, RESET, 
+        KC_TRNS, XSS1, XSS, RCS(KC_C), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGDOWN, RESET, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TG(1), KC_MEDIA_PLAY_PAUSE, TG(2), KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT),
 
-[_ESC] = LAYOUT_planck_grid( //ESC Key
+[_ESC] = LAYOUT_planck_grid( //ESC Key used for accent and some special key/functions
 
         KC_TRNS, UC_MOD, UC_WINC, UC(0x000E8), KC_TRNS, KC_TRNS, KC_TRNS, UC(0x000F9), UC(0x000EC), UC(0x000F2), KC_TRNS, KC_TRNS, 
         KC_TRNS, UC(0x000E0), UC(0x020AC), UC(0x000B0), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, UC_LNX, KC_TRNS, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, UC(0x30C4), KC_TRNS, KC_TRNS, KC_TRNS, MEH, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
+        KC_TRNS, KC_TRNS, KC_TRNS, UC(0x30C4), EICAR, KC_TRNS, KC_TRNS, MEH, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TG(1), KC_TRNS, TG(2), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
 
 };
@@ -146,6 +147,7 @@ ugrave 0x000F9
 degree 0x000B0
 katana 0x30C4
 meh ¯\_(ツ)_/¯
+eicar X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
 */
 
 //KC_ASTG autoshit toggle
@@ -233,6 +235,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
            // SEND_STRING("¯\_(ツ)_/¯");
                     send_unicode_hex_string("00AF 005C 005F 0028 30C4 0029 005F 002F 00AF");
                             } else {
+            // when keycode QMKBEST is released
+        }
+        break;
+    case EICAR:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+            SEND_STRING("X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*");
+        } else {
             // when keycode QMKBEST is released
         }
         break;
