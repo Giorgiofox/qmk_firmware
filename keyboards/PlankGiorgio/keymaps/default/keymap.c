@@ -38,7 +38,8 @@ enum planck_keycodes {
   MEH,
   EICAR,
   XSS,
-  XSS1
+  XSS1,
+  RANDOM
 };
 
 #define LOWER MO(_LOWER)
@@ -69,6 +70,7 @@ enum planck_keycodes {
 
 
 
+
 /*
 enum unicode_names {
     A,
@@ -95,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LT(5,KC_ESC), KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, 
         LT(3, KC_TAB), KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, 
         KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, MT(MOD_LSFT, KC_ENT), 
-        MO(4), KC_LCTL, KC_LGUI, KC_LALT, MO(1), KC_SPC, MO(2), RALT_T(KC_LEFT), KC_DOWN, KC_UP, KC_RGHT),
+        MO(4), KC_LCTL, KC_LGUI, KC_LALT, MO(1), KC_SPC, MO(2), KC_LEFT, KC_DOWN, KC_UP, KC_RGHT),
 
 [_LOWER] = LAYOUT_planck_grid( // lower level
         KC_TILD, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL, 
@@ -111,10 +113,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ADJUST] = LAYOUT_planck_grid( //mouse and other functions level, also activable with rasie+lower
 
-        KC_TRNS, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, KC_TRNS, KC_TRNS, KC_TRNS, KC_7, KC_8, KC_9, KC_TRNS, KC_TRNS, 
+        KC_TRNS, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, KC_TRNS, KC_TRNS, KC_TRNS, KC_7, KC_8, KC_9, KC_SLSH, KC_TRNS, 
         KC_TRNS, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, KC_TRNS, KC_TRNS, KC_TRNS, KC_4, KC_5, KC_6, KC_MS_WH_UP, KC_TRNS, 
         KC_CAPSLOCK, KC_ACL0, KC_ACL1, KC_ACL2, KC_TRNS, KC_TRNS, KC_TRNS, KC_1, KC_2, KC_3, KC_MS_WH_DOWN, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MEDIA_PLAY_PAUSE, KC_TRNS, KC_0, KC_DOT, KC_COMM, KC_TRNS),
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MEDIA_PLAY_PAUSE, KC_0, KC_0, KC_DOT, KC_COMM, KC_TRNS),
 
 [_FUNCTION] = LAYOUT_planck_grid( //Function Key
 
@@ -125,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ESC] = LAYOUT_planck_grid( //ESC Key used for accent and some special key/functions
 
-        KC_TRNS, UC_MOD, UC_WINC, UC(0x000E8), KC_TRNS, KC_TILDE, KC_TRNS, UC(0x000F9), UC(0x000EC), UC(0x000F2), KC_TRNS, KC_TRNS, 
+        KC_TRNS, UC_MOD, UC_WINC, UC(0x000E8), RANDOM, KC_TILDE, KC_TRNS, UC(0x000F9), UC(0x000EC), UC(0x000F2), KC_TRNS, KC_TRNS, 
         KC_TRNS, UC(0x000E0), UC(0x020AC), UC(0x000B0), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, UC_LNX, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, UC(0x30C4), EICAR, KC_TRNS, KC_TRNS, MEH, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TG(1), KC_TRNS, TG(2), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
@@ -263,6 +265,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         break;
 
+ case RANDOM:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+            tap_random_base64();
+            //SEND_STRING("rnd");
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
     case QWERTY:
       if (record->event.pressed) {
         print("mode just switched to qwerty and this is a huge string\n");
