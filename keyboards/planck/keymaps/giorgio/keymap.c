@@ -26,7 +26,8 @@
 enum planck_keycodes {
   RGB_SLD = EZ_SAFE_RANGE,
   XSS,
-  SOLID
+  SOLID,
+  RANDOM
 };
 
 enum planck_layers {
@@ -78,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_LAYER5] = LAYOUT_planck_grid( //ESC
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, UC(0x000E8), KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, UC(0x000F9), UC(0x000EC), UC(0x000F2), KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, UC(0x000E8), RANDOM, KC_TRANSPARENT, KC_TRANSPARENT, UC(0x000F9), UC(0x000EC), UC(0x000F2), KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, UC(0x000E0), UC(0x020AC), UC(0x000B0), KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_TRANSPARENT, XSS, UC(0x30C4), KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,          KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
@@ -143,7 +144,7 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
             {0,0,0}, {0,0,0},     {0,0,0},     {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_RED}, {HSV_RED}, {HSV_RED}, {HSV_GREEN}, {0,0,0}, 
             {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_RED}, {HSV_RED}, {HSV_RED}, {0,0,0}, {0,0,0} },
     //ESC
-    [5] = { {0,0,0}, {0,0,0}, {0,0,0}, {HSV_GREEN}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {0,0,0}, {0,0,0}, 
+    [5] = { {0,0,0}, {0,0,0}, {0,0,0}, {HSV_GREEN}, {HSV_YELLOW}, {0,0,0}, {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {0,0,0}, {0,0,0}, 
             {0,0,0}, {HSV_GREEN}, {HSV_RED}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
             {0,0,0}, {0,0,0}, {HSV_RED}, {HSV_RED}, {HSV_RED}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
             {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
@@ -205,14 +206,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
             // when keycode QMKBEST is released
         }
-        break
+        break;
             case SOLID:
       if (record->event.pressed) {
         rgblight_mode(1);
         rgblight_sethsv(128,255,255);
       }
       return false;
-
+      
+      case RANDOM:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+            tap_random_base64();
+            //SEND_STRING("rnd");
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
     case RGB_SLD:
       if (record->event.pressed) {
          //rgblight_mode(1);
