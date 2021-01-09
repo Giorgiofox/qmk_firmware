@@ -18,7 +18,18 @@
 #include "hal.h"
 
 keyboard_config_t keyboard_config;
+
 #ifdef RGB_MATRIX_ENABLE
+void suspend_power_down_kb(void) {
+    rgb_matrix_set_suspend_state(true);
+    suspend_power_down_user();
+}
+
+void suspend_wakeup_init_kb(void) {
+    rgb_matrix_set_suspend_state(false);
+    suspend_wakeup_init_user();
+}
+
 const is31_led g_is31_leds[DRIVER_LED_TOTAL] = {
 /* Refer to IS31 manual for these locations
  *   driver
@@ -103,20 +114,8 @@ led_config_t g_led_config = { {
     1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
     1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1
 } };
-
-void suspend_power_down_kb(void) {
-    rgb_matrix_set_color_all(0, 0, 0);
-    rgb_matrix_set_suspend_state(true);
-    suspend_power_down_user();
-}
-
- void suspend_wakeup_init_kb(void) {
-    rgb_matrix_set_suspend_state(false);
-    suspend_wakeup_init_user();
-}
 #endif
 
-/* Left B9   Right B8 */
 
 // See http://jared.geek.nz/2013/feb/linear-led-pwm
 static uint16_t cie_lightness(uint16_t v) {
@@ -134,7 +133,7 @@ static uint16_t cie_lightness(uint16_t v) {
   }
 }
 
-static PWMConfig pwmCFG = {
+ static PWMConfig pwmCFG = {
     0xFFFF,/* PWM clock frequency  */
     256,/* initial PWM period (in ticks) 1S (1/10kHz=0.1mS 0.1ms*10000 ticks=1S) */
     NULL,
@@ -212,18 +211,20 @@ void keyboard_pre_init_kb(void) {
     }
     // read kb settings from eeprom
     keyboard_config.raw = eeconfig_read_kb();
-#if defined(RGB_MATRIX_ENABLE) && defined(ORYX_CONFIGURATOR)
+#ifdef RGB_MATRIX_ENABLE
     if (keyboard_config.rgb_matrix_enable) {
         rgb_matrix_set_flags(LED_FLAG_ALL);
     } else {
         rgb_matrix_set_flags(LED_FLAG_NONE);
     }
 #endif
+
+    // initialize settings for front LEDs
     led_initialize_hardware();
     keyboard_pre_init_user();
 }
 
-#if defined(RGB_MATRIX_ENABLE) && defined(ORYX_CONFIGURATOR)
+#ifdef RGB_MATRIX_ENABLE
 void keyboard_post_init_kb(void) {
     rgb_matrix_enable_noeeprom();
     keyboard_post_init_user();
@@ -234,24 +235,11 @@ void eeconfig_init_kb(void) {  // EEPROM is getting reset!
     keyboard_config.raw = 0;
     keyboard_config.rgb_matrix_enable = true;
     keyboard_config.led_level = 4;
+
     eeconfig_update_kb(keyboard_config.raw);
     eeconfig_init_user();
 }
 
-
-#ifdef ORYX_CONFIGURATOR
-
-#ifndef PLANCK_EZ_USER_LEDS
-
-#ifndef PLANCK_EZ_LED_LOWER
-#    define PLANCK_EZ_LED_LOWER 3
-#endif
-#ifndef PLANCK_EZ_LED_RAISE
-#    define PLANCK_EZ_LED_RAISE 4
-#endif
-#ifndef PLANCK_EZ_LED_ADJUST
-#    define PLANCK_EZ_LED_ADJUST 6
-#endif
 
 layer_state_t layer_state_set_kb(layer_state_t state) {
     planck_ez_left_led_off();
@@ -259,13 +247,13 @@ layer_state_t layer_state_set_kb(layer_state_t state) {
     state = layer_state_set_user(state);
     uint8_t layer = biton32(state);
     switch (layer) {
-        case PLANCK_EZ_LED_LOWER:
+        case 1:
             planck_ez_left_led_on();
             break;
-        case PLANCK_EZ_LED_RAISE:
+        case 2:
             planck_ez_right_led_on();
             break;
-        case PLANCK_EZ_LED_ADJUST:
+        case 3:
             planck_ez_right_led_on();
             planck_ez_left_led_on();
             break;
@@ -274,7 +262,6 @@ layer_state_t layer_state_set_kb(layer_state_t state) {
     }
     return state;
 }
-#endif
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -294,7 +281,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
         case TOGGLE_LAYER_COLOR:
             if (record->event.pressed) {
                 keyboard_config.disable_layer_led ^= 1;
-                if (keyboard_config.disable_layer_led)
+              if (keyboard_config.disable_layer_led)
                     rgb_matrix_set_color_all(0, 0, 0);
                 eeconfig_update_kb(keyboard_config.raw);
             }
@@ -319,9 +306,8 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
             return false;
 #endif
     }
-    return process_record_user(keycode, record);
+  return process_record_user(keycode, record);
 }
-#endif
 
 #ifdef AUDIO_ENABLE
 bool music_mask_kb(uint16_t keycode) {
@@ -338,3 +324,73 @@ bool music_mask_kb(uint16_t keycode) {
     }
 }
 #endif
+#ifdef ORYX_ENABLE
+static uint16_t loops = 0;
+static bool is_on = false;
+#endif
+
+#ifdef DYNAMIC_MACRO_ENABLE
+static bool is_dynamic_recording = false;
+static uint16_t dynamic_loop_timer;
+
+void dynamic_macro_record_start_user(void) {
+    is_dynamic_recording = true;
+    dynamic_loop_timer = timer_read();
+    planck_ez_left_led_on();
+}
+
+void dynamic_macro_record_end_user(int8_t direction) {
+    is_dynamic_recording = false;
+    layer_state_set_kb(layer_state);
+}
+#endif
+
+void matrix_scan_kb(void) {
+#ifdef ORYX_ENABLE
+    if(webusb_state.pairing == true) {
+        if(loops == 0) {
+          //lights off
+        }
+        if(loops % WEBUSB_BLINK_STEPS == 0) {
+            if(is_on) {
+              planck_ez_left_led_on();
+              planck_ez_right_led_off();
+            }
+            else {
+              planck_ez_left_led_off();
+              planck_ez_right_led_on();
+            }
+            is_on ^= 1;
+        }
+        if(loops > WEBUSB_BLINK_END * 2) {
+            webusb_state.pairing = false;
+            loops = 0;
+            planck_ez_left_led_off();
+            planck_ez_right_led_off();
+        }
+        loops++;
+    }
+    else if(loops > 0) {
+      loops = 0;
+      planck_ez_left_led_off();
+      planck_ez_right_led_off();
+    }
+#endif
+#ifdef DYNAMIC_MACRO_ENABLE
+    if (is_dynamic_recording) {
+        if (timer_elapsed(dynamic_loop_timer) > 1)
+        {
+            static uint8_t counter;
+            counter++;
+            if (counter > 100) {
+                planck_ez_left_led_on();
+            } else {
+                planck_ez_left_led_off();
+
+            }
+            dynamic_loop_timer = timer_read();
+        }
+    }
+#endif
+    matrix_scan_user();
+}
