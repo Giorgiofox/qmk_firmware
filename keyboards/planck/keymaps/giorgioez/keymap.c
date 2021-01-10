@@ -29,7 +29,8 @@ enum planck_keycodes {
   RGB_SLD = EZ_SAFE_RANGE,
   XSS,
   SOLID,
-  RANDOM
+  RANDOM,
+  EICAR
 };
 
 enum planck_layers {
@@ -83,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_LAYER5] = LAYOUT_planck_grid( //ESC
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, UC(0x000E8), RANDOM, KC_TRANSPARENT, KC_TRANSPARENT, UC(0x000F9), UC(0x000EC), UC(0x000F2), KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, UC(0x000E0), UC(0x020AC), UC(0x000B0), KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, XSS, UC(0x30C4), KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, XSS, UC(0x30C4), EICAR, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,          KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
   ),
 
@@ -197,7 +198,7 @@ void rgb_matrix_indicators_user(void) {
     break;
   }
 }
-
+//X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     
@@ -205,11 +206,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             // when keycode QMKBEST is pressed
             SEND_STRING("<script>alert(document.cookie);</script>");
-        } else {
-            // when keycode QMKBEST is released
-        }
+        } 
         break;
-            case SOLID:
+
+
+        case EICAR:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+      SEND_STRING("X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*");
+        } 
+        break;
+        
+
+        case SOLID:
       if (record->event.pressed) {
         rgblight_mode(1);
         rgblight_sethsv(128,255,255);
@@ -221,9 +230,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             // when keycode QMKBEST is pressed
             tap_random_base64();
             //SEND_STRING("rnd");
-        } else {
-            // when keycode QMKBEST is released
-        }
+        } 
         break;
     case RGB_SLD:
       if (record->event.pressed) {
