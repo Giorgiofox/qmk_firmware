@@ -1,6 +1,6 @@
 // PLANCK EZ configuration for QMK Giorgio Campiotti
 // Version 1.00 
-// make planck/ez/glow:giorgioez:flash
+// to compile make planck/ez/glow:giorgioez:flash
 // http://www.keyboard-layout-editor.com/#/gists/4cfb26f84bbb4fabe5e6c7cc22c85e24
 
 #include QMK_KEYBOARD_H
@@ -40,6 +40,7 @@ enum planck_layers {
   _ADJUST,
   _LAYER4,//TAB
   _LAYER5,//ESC
+  _LAYER6,//FUNC
 };
 
 #define LOWER MO(_LOWER)
@@ -68,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_ADJUST] = LAYOUT_planck_grid(
-    KC_TRANSPARENT, KC_TRANSPARENT, UC_MOD,         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, LED_LEVEL,      SOLID, KC_TRANSPARENT, KC_TRANSPARENT, KC_SYSTEM_SLEEP,
+    KC_TRANSPARENT, KC_TRANSPARENT, UC_MOD,         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, LED_LEVEL,      SOLID, RGB_SLD, KC_TRANSPARENT, KC_SYSTEM_SLEEP,
     KC_TRANSPARENT, KC_TRANSPARENT, AU_ON,          AU_OFF,         AU_TOG,         KC_TRANSPARENT, KC_TRANSPARENT, RGB_TOG,        RGB_VAD,        RGB_VAI,        KC_TRANSPARENT, RESET,          
     KC_TRANSPARENT, KC_TRANSPARENT, MU_ON,          MU_OFF,         MU_TOG,         MU_MOD,         KC_TRANSPARENT, RGB_MOD,        RGB_HUD,        RGB_HUI,        KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,          KC_TRANSPARENT, RGB_SAD, RGB_SAI, TOGGLE_LAYER_COLOR, KC_TRANSPARENT
@@ -86,6 +87,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, UC(0x000E0), UC(0x020AC), UC(0x000B0), KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_TRANSPARENT, XSS, UC(0x30C4), EICAR, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,          KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
+  ),
+  [_LAYER6] = LAYOUT_planck_grid( //FUNCTION (to be implemented)
+    TO(0), KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+    TG(4), KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TG(1), KC_TRANSPARENT, TG(2),KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
   ),
 
 };
@@ -151,6 +158,12 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
             {0,0,0}, {HSV_GREEN}, {HSV_RED}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
             {0,0,0}, {0,0,0}, {HSV_RED}, {HSV_RED}, {HSV_RED}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
             {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+    [6] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
+            {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
+            {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
+            {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_PINK}, {HSV_PINK}, {HSV_PINK}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+              
+
 
 };
 
@@ -192,6 +205,9 @@ void rgb_matrix_indicators_user(void) {
     case 5:
       set_layer_color(5);
       break;
+    case 6:
+      set_layer_color(6);
+      break;
    default:
     if (rgb_matrix_get_flags() == LED_FLAG_NONE)
       rgb_matrix_set_color_all(0, 0, 0);
@@ -221,7 +237,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case SOLID:
       if (record->event.pressed) {
         rgblight_mode(1);
-        rgblight_sethsv(128,255,255);
+        rgblight_sethsv(HSV_CYAN);
       }
       return false;
       
@@ -234,7 +250,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
     case RGB_SLD:
       if (record->event.pressed) {
-         //rgblight_mode(1);
+         rgblight_mode(0);
         set_layer_color(0);
       }
       return false;
