@@ -17,16 +17,6 @@ The docs are powered by [Docsify](https://docsify.js.org/) and hosted on [GitHub
 
 You can request changes by making a fork and opening a [pull request](https://github.com/qmk/qmk_firmware/pulls), or by clicking the "Edit this page" link at the bottom of any page.
 
-## Supported Keyboards
-
-* [Planck](/keyboards/planck/)
-* [Preonic](/keyboards/preonic/)
-* [ErgoDox EZ](/keyboards/ergodox_ez/)
-* [Clueboard](/keyboards/clueboard/)
-* [Cluepad](/keyboards/clueboard/17/)
-* [Atreus](/keyboards/atreus/)
-
-The project also includes community support for [lots of other keyboards](/keyboards/).
 
 ## Maintainers
 
@@ -38,7 +28,7 @@ QMK is developed and maintained by Jack Humbert of OLKB with contributions from 
 
 ## Giorgio Keyboards
 
-Planck EZ 	make planck/ez/glow:giorgioez:flash  
-BM40 RGB 	make bm40hsrgb:giorgio:flash
-3DPrint		make PlankGiorgio:default:flash
+*Planck EZ 	make planck/ez/glow:giorgioez:flash  
+*BM40 RGB 	make bm40hsrgb:giorgio:flash
+*3DPrint	make PlankGiorgio:default:flash
 
