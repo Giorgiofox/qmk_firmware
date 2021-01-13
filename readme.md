@@ -35,3 +35,10 @@ QMK is developed and maintained by Jack Humbert of OLKB with contributions from 
 ## Official Website
 
 [qmk.fm](https://qmk.fm) is the official website of QMK, where you can find links to this page, the documentation, and the keyboards supported by QMK.
+
+## Giorgio Keyboards
+
+Planck EZ 	make planck/ez/glow:giorgioez:flash  
+BM40 RGB 	make bm40hsrgb:giorgio:flash
+3DPrint		make PlankGiorgio:default:flash
+

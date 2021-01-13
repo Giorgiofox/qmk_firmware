@@ -42,6 +42,8 @@
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 #define LOCKING_SUPPORT_ENABLE
 
+#define UNICODE_SELECTED_MODES UC_LNX,UC_WINC
+
 /* Locking resynchronize hack */
 #define LOCKING_RESYNC_ENABLE
 
