@@ -2,6 +2,7 @@
 // Version 1.00 
 // to compile make planck/ez/glow:giorgioez:flash
 // http://www.keyboard-layout-editor.com/#/gists/4cfb26f84bbb4fabe5e6c7cc22c85e24
+http://www.keyboard-layout-editor.com/#/gists/0b2454b9b56174ec7c08701760f133f1
 
 #include QMK_KEYBOARD_H
 #ifdef AUDIO_ENABLE
