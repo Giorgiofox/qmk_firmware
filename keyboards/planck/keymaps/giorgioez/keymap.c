@@ -2,7 +2,7 @@
 // Version 1.00 
 // to compile make planck/ez/glow:giorgioez:flash
 // http://www.keyboard-layout-editor.com/#/gists/4cfb26f84bbb4fabe5e6c7cc22c85e24
-http://www.keyboard-layout-editor.com/#/gists/0b2454b9b56174ec7c08701760f133f1
+// http://www.keyboard-layout-editor.com/#/gists/0b2454b9b56174ec7c08701760f133f1
 
 #include QMK_KEYBOARD_H
 #ifdef AUDIO_ENABLE
@@ -134,8 +134,8 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
             {226,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {226,255,255}, 
             {226,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {HSV_YELLOW}, 
             {226,255,255}, {HSV_RED}, {HSV_GREEN}, {HSV_BLUE}, {169,120,255}, {169,120,255}, {169,120,255}, {226,255,255}, {226,255,255}, {226,255,255}, {226,255,255} },
-
-    [1] = { {0,0,0}, {0,0,0},      {0,0,0},       {0,0,0},      {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_YELLOW}, {HSV_YELLOW}, {HSV_RED}, 
+    //LOWER
+    [1] = { {0,0,0}, {HSV_CYAN},      {HSV_PINK},       {HSV_WHITE},      {0,0,0}, {0,0,0}, {0,0,0}, {HSV_PURPLE}, {HSV_BLUE}, {HSV_YELLOW}, {HSV_YELLOW}, {HSV_RED}, 
             {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {0,0,0}, {0,0,0}, {HSV_YELLOW}, {HSV_YELLOW}, {0,0,0}, 
             {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {0,0,0}, {0,0,0}, {HSV_YELLOW}, {HSV_YELLOW}, {0,0,0}, 
             {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
