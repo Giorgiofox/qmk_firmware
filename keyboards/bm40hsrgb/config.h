@@ -21,8 +21,8 @@
 #define VENDOR_ID       0x4B50 // "KP"
 #define PRODUCT_ID      0x3430 // "40"
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    KPRepublic
-#define PRODUCT         BM40 Hotswap RGB
+#define MANUFACTURER    GiorgioCampiotti
+#define PRODUCT         BM40 Hotswap RGB Planck
 
 /* key matrix size */
 #define MATRIX_ROWS 4
@@ -32,7 +32,7 @@
 #define MATRIX_ROW_PINS { B3, B2, E6, B5 }
 #define MATRIX_COL_PINS { B6, C6, B4, D7, D4, D6, C7, F6, F5, F4, F1, F0 }
 #define UNUSED_PINS
-#define RGBLIGHT_EFFECT_KNIGHT
+
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
@@ -42,6 +42,19 @@
 
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 #define LOCKING_SUPPORT_ENABLE
+//#define RGBLIGHT_SLEEP
+
+#define RGB_MATRIX_FRAMEBUFFER_EFFECTS
+#define RGB_DISABLE_WHEN_USB_SUSPENDED true
+
+#define RGB_MATRIX_LED_PROCESS_LIMIT 5
+#define RGB_MATRIX_LED_FLUSH_LIMIT 26
+
+
+#define IGNORE_MOD_TAP_INTERRUPT
+
+#define TAPPING_TOGGLE  1
+
 
 #define UNICODE_SELECTED_MODES UC_LNX,UC_WINC
 

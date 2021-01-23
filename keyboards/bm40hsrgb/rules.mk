@@ -23,5 +23,5 @@ RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_DRIVER = WS2812
 EXTRAFLAGS += -flto # reduce firmare size
 LAYOUTS = planck_mit
-LAYOUTS_HAS_RGB = yes
+LAYOUTS_HAS_RGB = no
 UNICODE_ENABLE = yes
