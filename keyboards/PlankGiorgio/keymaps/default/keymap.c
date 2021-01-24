@@ -31,6 +31,7 @@ enum planck_layers {
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
+  RGB_SLD,
   LOWER,
   RAISE,
   FUNCTION,
@@ -113,10 +114,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ADJUST] = LAYOUT_planck_grid( //mouse and other functions level, also activable with rasie+lower
 
-        KC_TRNS, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, KC_TRNS, KC_TRNS, KC_TRNS, KC_7, KC_8, KC_9, KC_SLSH, KC_TRNS, 
-        KC_TRNS, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, KC_TRNS, KC_TRNS, KC_TRNS, KC_4, KC_5, KC_6, KC_MS_WH_UP, KC_TRNS, 
-        KC_CAPSLOCK, KC_ACL0, KC_ACL1, KC_ACL2, KC_TRNS, KC_TRNS, KC_TRNS, KC_1, KC_2, KC_3, KC_MS_WH_DOWN, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MEDIA_PLAY_PAUSE, KC_0, KC_0, KC_DOT, KC_COMM, KC_TRNS),
+        // KC_TRNS, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, KC_TRNS, KC_TRNS, KC_TRNS, KC_7, KC_8, KC_9, KC_SLSH, KC_TRNS, 
+        // KC_TRNS, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, KC_TRNS, KC_TRNS, KC_TRNS, KC_4, KC_5, KC_6, KC_MS_WH_UP, KC_TRNS, 
+        // KC_CAPSLOCK, KC_ACL0, KC_ACL1, KC_ACL2, KC_TRNS, KC_TRNS, KC_TRNS, KC_1, KC_2, KC_3, KC_MS_WH_DOWN, KC_TRNS, 
+        // KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MEDIA_PLAY_PAUSE, KC_0, KC_0, KC_DOT, KC_COMM, KC_TRNS),
+
+
+    _______, RGB_MODE_KNIGHT,   UC_MOD,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, _______,  _______, KC_TRANSPARENT, KC_SYSTEM_SLEEP ,
+    _______, _______, _______, _______, _______, _______, _______, RGB_TOG,  RGB_VAD,  RGB_VAI, RGB_MODE_KNIGHT, RESET,
+    _______, _______, _______, _______, _______, _______, _______, RGB_MOD,  RGB_HUD,  RGB_HUI, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, RGB_SAD,  RGB_SAI, _______, _______
+),
 
 [_FUNCTION] = LAYOUT_planck_grid( //Function Key
 
@@ -295,6 +303,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+      
     case RAISE:
       if (record->event.pressed) {
                 #ifdef AUDIO_ENABLE
