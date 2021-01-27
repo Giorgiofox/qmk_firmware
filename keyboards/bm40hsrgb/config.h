@@ -22,7 +22,7 @@
 #define PRODUCT_ID      0x3430 // "40"
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    GiorgioCampiotti
-#define PRODUCT         BM40 Hotswap RGB Planck
+#define PRODUCT         BM40 Hotswap RGB Planck 
 
 /* key matrix size */
 #define MATRIX_ROWS 4
@@ -44,14 +44,26 @@
 #define LOCKING_SUPPORT_ENABLE
 //#define RGBLIGHT_SLEEP
 
+#define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF
+//aggiunto ma non so a cosa serve, documentarsi. 
+
+
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
-#define RGB_DISABLE_WHEN_USB_SUSPENDED true
+//#define RGB_DISABLE_WHEN_USB_SUSPENDED true
 
 #define RGB_MATRIX_LED_PROCESS_LIMIT 5
 #define RGB_MATRIX_LED_FLUSH_LIMIT 26
 
 
 #define IGNORE_MOD_TAP_INTERRUPT
+#define TAPPING_TERM 130
+
+
+
+
+#define RGB_DISABLE_WHEN_USB_SUSPENDED true
+//vedi keymap.c for suspend function
+
 
 #define TAPPING_TOGGLE  1
 

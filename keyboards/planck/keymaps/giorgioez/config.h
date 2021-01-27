@@ -1,8 +1,12 @@
 #pragma once
 
+
 #ifdef AUDIO_ENABLE
-#define STARTUP_SONG SONG(PLANCK_SOUND)
+  //#define STARTUP_SONG SONG(PLANCK_SOUND)
+  #define STARTUP_SONG SONG(PREONIC_SOUND)
+
 #endif
+
 
 #define MIDI_BASIC
 
@@ -27,6 +31,8 @@
 
 #define FIRMWARE_VERSION u8"WWPBz/blglj"
 #define RGB_MATRIX_STARTUP_SPD 60
+
+
 
 
 #define UNICODE_SELECTED_MODES UC_LNX,UC_WINC

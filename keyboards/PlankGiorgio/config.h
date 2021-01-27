@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID   0x0000
 #define DEVICE_VER   0x0001
 #define MANUFACTURER GiorgioCampiotti
-#define PRODUCT      PlankGiorgioV2
+#define PRODUCT      PlankGiorgio3D
 
 /* key matrix size */
 #define MATRIX_ROWS 4
@@ -100,11 +100,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define B5_AUDIO
 #define AUDIO_CLICKY
 
+
+#define NO_MUSIC_MODE
+
 #ifdef AUDIO_ENABLE
   #define STARTUP_SONG SONG(PLANCK_SOUND)
 #endif
 
-#define NO_MUSIC_MODE
 
 
 //#define UNICODE_SELECTED_MODES UC_LNX

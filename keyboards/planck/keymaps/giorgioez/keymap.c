@@ -6,7 +6,7 @@
 
 #include QMK_KEYBOARD_H
 #ifdef AUDIO_ENABLE
-#include "muse.h"
+//#include "muse.h"
 #endif
 #include "eeprom.h"
 
@@ -302,21 +302,21 @@ void encoder_update(bool clockwise) {
     }
 }
 
-void matrix_scan_user(void) {
-#ifdef AUDIO_ENABLE
-    if (muse_mode) {
-        if (muse_counter == 0) {
-            uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()];
-            if (muse_note != last_muse_note) {
-                stop_note(compute_freq_for_midi_note(last_muse_note));
-                play_note(compute_freq_for_midi_note(muse_note), 0xF);
-                last_muse_note = muse_note;
-            }
-        }
-        muse_counter = (muse_counter + 1) % muse_tempo;
-    }
-#endif
-}
+// void matrix_scan_user(void) {
+// #ifdef AUDIO_ENABLE
+//     if (muse_mode) {
+//         if (muse_counter == 0) {
+//             uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()];
+//             if (muse_note != last_muse_note) {
+//                 stop_note(compute_freq_for_midi_note(last_muse_note));
+//                 play_note(compute_freq_for_midi_note(muse_note), 0xF);
+//                 last_muse_note = muse_note;
+//             }
+//         }
+//         muse_counter = (muse_counter + 1) % muse_tempo;
+//     }
+// #endif
+//}
 
 bool music_mask_user(uint16_t keycode) {
     switch (keycode) {
