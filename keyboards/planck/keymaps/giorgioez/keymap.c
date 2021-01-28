@@ -9,6 +9,9 @@
 //#include "muse.h"
 #endif
 #include "eeprom.h"
+bool user_rgbcustom;
+
+
 
 #define KC_MAC_UNDO LGUI(KC_Z)
 #define KC_MAC_CUT LGUI(KC_X)
@@ -129,12 +132,13 @@ void keyboard_post_init_user(void) {
 */
 
 
+
 const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
-    [0] = { {HSV_YELLOW}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {226,255,255}, 
-            {226,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {226,255,255}, 
-            {226,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {130,255,255}, {HSV_YELLOW}, 
-            {226,255,255}, {HSV_RED}, {HSV_GREEN}, {HSV_BLUE}, {169,120,255}, {169,120,255}, {169,120,255}, {226,255,255}, {226,255,255}, {226,255,255}, {226,255,255} },
-    //LOWER
+    [0] = { {HSV_YELLOW}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {226,255,255}, 
+            {HSV_MAGENTA}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {226,255,255}, 
+            {226,255,255}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {HSV_YELLOW}, 
+            {226,255,255}, {HSV_RED}, {HSV_GREEN}, {HSV_BLUE}, {HSV_WHITE}, {HSV_WHITE}, {HSV_WHITE}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA} },
+
     [1] = { {0,0,0}, {HSV_CYAN},      {HSV_PINK},       {HSV_WHITE},      {0,0,0}, {0,0,0}, {0,0,0}, {HSV_PURPLE}, {HSV_BLUE}, {HSV_YELLOW}, {HSV_YELLOW}, {HSV_RED}, 
             {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {0,0,0}, {0,0,0}, {HSV_YELLOW}, {HSV_YELLOW}, {0,0,0}, 
             {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {0,0,0}, {0,0,0}, {HSV_YELLOW}, {HSV_YELLOW}, {0,0,0}, 
@@ -145,10 +149,10 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
              {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {0,0,0}, {HSV_ORANGE}, {HSV_ORANGE}, {0,0,0}, {0,0,0}, 
              {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_CYAN}, {HSV_CYAN}, {HSV_CYAN}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
     //ADJUST
-    [3] = { {0,0,0}, {0,0,0}, {HSV_GREEN}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_WHITE}, {HSV_YELLOW}, {0,0,0}, {0,0,0}, {HSV_CYAN}, 
-            {0,0,0}, {0,0,0}, {153,255,255}, {153,255,255}, {153,255,255}, {0,0,0}, {0,0,0}, {33,255,255}, {33,255,255}, {33,255,255}, {0,0,0}, {14,255,255}, 
-            {0,0,0}, {0,0,0}, {14,255,255}, {14,255,255}, {14,255,255}, {14,255,255}, {0,0,0}, {33,255,255}, {33,255,255}, {33,255,255}, {0,0,0}, {0,0,0}, 
-            {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {33,255,255}, {33,255,255}, {33,255,255}, {HSV_YELLOW}, {HSV_YELLOW}, {0,0,0}, {0,0,0} },
+    [3] = { {0,0,0}, {0,0,0}, {HSV_GREEN}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_WHITE}, {HSV_CYAN}, {HSV_GREEN}, {0,0,0}, {HSV_BLUE}, 
+            {0,0,0}, {0,0,0}, {153,255,255}, {153,255,255}, {153,255,255}, {0,0,0}, {0,0,0}, {HSV_YELLOW}, {HSV_YELLOW}, {HSV_YELLOW}, {0,0,0}, {HSV_RED}, 
+            {0,0,0}, {0,0,0}, {14,255,255}, {14,255,255}, {14,255,255}, {14,255,255}, {0,0,0}, {HSV_YELLOW}, {HSV_YELLOW}, {HSV_YELLOW}, {0,0,0}, {0,0,0}, 
+            {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_MAGENTA}, {HSV_WHITE}, {HSV_CYAN}, {HSV_YELLOWxzcdcffd}, {HSV_YELLOW}, {0,0,0}, {0,0,0} },
     //TAB
     [4] = { {0,0,0}, {HSV_CYAN},  {HSV_GREEN}, {HSV_CYAN  }, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_RED}, {HSV_RED}, {HSV_RED}, {0,0,0}, {0,0,0}, 
             {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_RED}, {HSV_RED}, {HSV_RED}, {HSV_GREEN}, {0,0,0}, 
@@ -159,12 +163,13 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
             {0,0,0}, {HSV_GREEN}, {HSV_RED}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
             {0,0,0}, {0,0,0}, {HSV_RED}, {HSV_RED}, {HSV_RED}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
             {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_GREEN}, {HSV_GREEN}, {HSV_GREEN}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+
+            
     [6] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
             {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
             {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, 
             {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {HSV_PINK}, {HSV_PINK}, {HSV_PINK}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
               
-
 
 };
 
@@ -185,11 +190,16 @@ void set_layer_color(int layer) {
   }
 }
 
+//uint8_t rgb_matrix_is_enabled(void) { return rgb_matrix_config.enable; }
+ //bool rgb_enabled = rgb_matrix_config.enable;
 void rgb_matrix_indicators_user(void) {
   if (g_suspend_state || keyboard_config.disable_layer_led) { return; }
   switch (biton32(layer_state)) {
     case 0:
-   //m   set_layer_color(0);
+
+    if (user_rgbcustom){
+      set_layer_color(0);
+    }
       break;
     case 1:
       set_layer_color(1);
@@ -237,6 +247,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case SOLID:
       if (record->event.pressed) {
+       // rgb_matrix_mode(1)
+               user_rgbcustom = false;
         rgblight_mode(1);
         rgblight_sethsv(HSV_CYAN);
       }
@@ -251,8 +263,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
     case RGB_SLD:
       if (record->event.pressed) {
-         rgblight_mode(0);
-        set_layer_color(0);
+        // rgblight_mode(0);
+        //set_layer_color(0);
+        user_rgbcustom = true;
       }
       return false;
   }

@@ -58,11 +58,16 @@
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 130
 
-
+ //#define RGBLIGHT_HUE_STEP 5
+// #define RGBLIGHT_SAT_STEP 3
+// #define RGBLIGHT_VAL_STEP 5
+// #define RGBLIGHT_LIMIT_VAL 255
 
 
 #define RGB_DISABLE_WHEN_USB_SUSPENDED true
 //vedi keymap.c for suspend function
+
+
 
 
 #define TAPPING_TOGGLE  1

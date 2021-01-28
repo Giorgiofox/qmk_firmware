@@ -37,7 +37,7 @@ led_config_t g_led_config = {
         1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
         1, 1, 1, 1, 1,   1,  1, 1, 1, 1, 1,
        // 2, 2, 2, 2, 2, 2
-        // BACK LED
+        // BACK LED disable
     }
 };
 #endif
