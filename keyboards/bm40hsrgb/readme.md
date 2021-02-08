@@ -1,14 +1,12 @@
-# bm40hsrgb
+# bm40hsrgb Giorgio Campiotti
 
 ![BM40 RGB](https://rgoulter.com/images/keyboards/bm40rgb/bm40rgb_large.jpg)
 
-An ortholinear 40% hotswap keyboard with per-key RGB in-switch LEDs and RGB Backlighting, from KP Republic.
+An ortholinear 40% hotswap keyboard with per-key RGB in-switch LEDs and RGB Backlighting, pcb from KP Republic.
 
 This firmware was originally taken from a kbfirmware.json and manually converted. You may find the original `.json` files [here](https://drive.google.com/drive/folders/1tlTHQIFcluK2mjZ4UbbKCsdRLgSRSPw6).
 
-* Keyboard Maintainer: [rgoulter](https://github.com/rgoulter)
-* Hardware Supported: bm40hsrgb PCB
-* Hardware Availability: [KPRepublic](https://www.aliexpress.com/item/4001147779116.html)
+This is aligned with other Planck firmware in repo 
 
 Make example for this keyboard (after setting up your build environment):
 
