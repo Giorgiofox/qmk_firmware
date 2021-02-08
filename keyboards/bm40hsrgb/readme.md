@@ -1,6 +1,9 @@
 # bm40hsrgb Giorgio Campiotti
 
-![BM40 RGB](<iframe width="560" height="315" src="https://www.youtube.com/embed/xaIX-OjZHio" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>)
+
+[![Video](https://img.youtube.com/vi/xaIX-OjZHio/0.jpg)](https://www.youtube.com/embed/xaIX-OjZHio)
+
+
 
 An ortholinear 40% hotswap keyboard with per-key RGB in-switch LEDs and RGB Backlighting, pcb from KP Republic.
 
